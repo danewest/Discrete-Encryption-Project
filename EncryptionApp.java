@@ -1,5 +1,4 @@
 import com.mathworks.engine.*;
-import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -7,8 +6,8 @@ public class EncryptionApp {
     public static void main (String[] args) throws InterruptedException, ExecutionException {
         Scanner in = new Scanner(System.in);
 
-        // establishing necessary variables
-        int p, q, n, phi, b, a, chunkSize;
+        // establishing necessary variables, *these will not change!*
+        final int p, q, n, phi, b, a, chunkSize;
         p = 20287;
         q = 20323;
         n = p*q;
@@ -48,14 +47,8 @@ public class EncryptionApp {
 
             return mEngine;
             // Error handling for different problems
-        } catch (EngineException e) {
-            System.err.println("MATLAB Engine Error: " + e.getMessage());
-        } catch (InterruptedException e) {
-            System.err.println("Execution Interrupted: " + e.getMessage());
-        } catch (MatlabExecutionException e) {
-            System.err.println("Matlab Execution Error: " + e.getMessage());
-        } catch (ExecutionException e) {
-            System.err.println("Execution Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Engine start failed: " + e.getMessage());
         }
         return null;
     }
@@ -63,7 +56,7 @@ public class EncryptionApp {
         try {
             return eng.feval("modExp", base, exponent, modulus);
         } catch (InterruptedException | ExecutionException e) {
-            System.err.println("Execution Interrupted: " + e.getMessage());
+            System.err.println("modExp failed: " + e.getMessage());
         }
         return "";
     }
@@ -71,7 +64,7 @@ public class EncryptionApp {
         try {
             return eng.feval("textToDecimal", text, chunkSize);
         } catch (InterruptedException | ExecutionException e) {
-            System.err.println("Execution Interrupted: " + e.getMessage());
+            System.err.println("textToDecimal failed: " + e.getMessage());
         }
         return "";
     }
@@ -79,7 +72,7 @@ public class EncryptionApp {
         try {
             return eng.feval("decimalToText", num, chunkSize);
         } catch (InterruptedException | ExecutionException e) {
-            System.err.println("Execution Interrupted: " + e.getMessage());
+            System.err.println("decimalToText failed: " + e.getMessage());
         }
         return "";
     }
