@@ -1,7 +1,6 @@
 import com.mathworks.engine.*;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
-import EncryptionHelper.java;
 
 public class EncryptionApp {
     public static void main (String[] args) throws InterruptedException, ExecutionException {
