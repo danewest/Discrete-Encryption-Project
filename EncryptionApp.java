@@ -3,7 +3,7 @@ import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
-public class start {
+public class EncryptionApp {
     public static void main (String[] args) throws InterruptedException, ExecutionException {
         Scanner in = new Scanner(System.in);
 
