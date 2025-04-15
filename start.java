@@ -1,12 +1,10 @@
 import com.mathworks.engine.*;
-import jdk.jshell.EvalException;
-
+import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class start {
-    public static void main (String[] args) {
-        MatlabEngine engine = engineStart();
+    public static void main (String[] args) throws InterruptedException, ExecutionException {
         Scanner in = new Scanner(System.in);
 
         // establishing necessary variables
@@ -19,9 +17,26 @@ public class start {
         a = 291481949;
         chunkSize = 3;
 
+        // Take input
+        System.out.println("What is your message?");
         String input = in.nextLine();
+
+        //start MATLAB
+        MatlabEngine engine = engineStart();
+
         // encrypt message M
+        System.out.println("Calling textToDecimal...");
         String M = textToDecimal(input, chunkSize, engine);
+        System.out.println("Message into decimal: " + M);
+        String C = modExp(M, b, n, engine); // message is encrypted
+        System.out.println("Encrypted message: " + C);
+        // System.out.println(decimalToText(C, chunkSize, engine)); // prints encrypted message
+        System.out.println("");
+
+        //decrypt message C
+        String F = modExp(C, a, n, engine);
+        System.out.println("Decrypted message: " + F);
+        // System.out.println(decimalToText(F, chunkSize, engine));
     }
 
     public static MatlabEngine engineStart() {
@@ -44,19 +59,25 @@ public class start {
         }
         return null;
     }
-    public static float textToDecimal(String text, int chunkSize, MatlabEngine eng) {
+    public static String modExp(String base, int exponent, int modulus, MatlabEngine eng) {
         try {
-            float dec = eng.feval("textToDecimal", text, chunkSize);
-            return dec;
+            return eng.feval("modExp", base, exponent, modulus);
         } catch (InterruptedException | ExecutionException e) {
             System.err.println("Execution Interrupted: " + e.getMessage());
         }
-        return 0;
+        return "";
     }
-    public static String decimalToText (int num, int chunkSize, MatlabEngine eng) {
+    public static String textToDecimal(String text, int chunkSize, MatlabEngine eng) {
         try {
-            String str = eng.feval("decimalToText", num, chunkSize);
-            return str;
+            return eng.feval("textToDecimal", text, chunkSize);
+        } catch (InterruptedException | ExecutionException e) {
+            System.err.println("Execution Interrupted: " + e.getMessage());
+        }
+        return "";
+    }
+    public static String decimalToText (String num, int chunkSize, MatlabEngine eng) {
+        try {
+            return eng.feval("decimalToText", num, chunkSize);
         } catch (InterruptedException | ExecutionException e) {
             System.err.println("Execution Interrupted: " + e.getMessage());
         }
