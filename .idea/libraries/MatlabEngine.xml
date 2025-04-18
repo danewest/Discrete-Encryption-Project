@@ -2,6 +2,8 @@
   <library name="MatlabEngine">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/engine.jar!/" />
+      <root url="jar://$PROJECT_DIR$/encryption/lib/engine.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../Program Files/MATLAB/R2024b/extern/engines/java/jar/engine.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
