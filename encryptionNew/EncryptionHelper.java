@@ -16,7 +16,7 @@ public class EncryptionHelper {
         String text = inText.toLowerCase();
         String resString = "";
         
-        // Checks if the character is in the alphabet. If it is
+        // Checks if the character is in the alphabet. If it is add it to the string
         for (int i = 0; i < text.length(); i++) {
             int curr = isCharInString(text.charAt(i), ALPHABET);
             if (curr != -1) {
@@ -26,7 +26,7 @@ public class EncryptionHelper {
                 break;
             }
         }
-        System.out.println(inText + " -> " + resString);
+        System.out.print(resString);
         // Converts the converted text into an integer and returns it
         return resString;
     }
@@ -41,7 +41,6 @@ public class EncryptionHelper {
             res.append(ALPHABET.charAt(index));
         }
 
-        System.out.println(num + " -> " + res.toString());
         return res.toString();
     }
 
@@ -93,6 +92,16 @@ public class EncryptionHelper {
         String[] res = new String[inText.length() / 2];
         int resCount = 0;
 
+        //prints the chunked text in a line
+        System.out.println("\n" + "Chunked text: ");
+        for (int i = 0; i < inText.length(); i += 2) {
+            String chunk = inText.substring(i, i + 2);
+            System.out.print(chunk + " ");
+        }
+
+        System.out.println("");
+
+        //encrypts message chunk by chunk
         for (int i = 0; i < inText.length(); i += 2) {
             String chunk = inText.substring(i, i + 2);
             String decimal = textToDecimal(chunk);
@@ -102,12 +111,14 @@ public class EncryptionHelper {
             res[resCount++] = numberToFakeText(encrypted);
         }
 
+        System.out.println("");
+
         arrayPrint(res);
         return res;
     }
 
     // Decrypts the number given by fakeTextToNumber
-    public static String decrypt(String[] cipher, BigInteger exponent, BigInteger mult) {
+    public static void decrypt(String[] cipher, BigInteger exponent, BigInteger mult) {
         StringBuilder res = new StringBuilder();
 
         for (int i = 0; i < cipher.length; i++) {
@@ -121,13 +132,12 @@ public class EncryptionHelper {
             res.append(decimalToText(numStr));
         }
 
-        System.out.println("Decrypted text: " + res.toString());
-        return res.toString();
+        System.out.println("\n" + "Decrypted text: " + res.toString());
     }
 
     // Prints chunked messages. For testing
     private static void arrayPrint(String[] message) {
-        System.out.print("\nMessage: ");
+        System.out.print("Encrypted Message: ");
         for (int i = 0; i < message.length; i++) {
             System.out.print(message[i]);
         }
